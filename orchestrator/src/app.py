@@ -9,6 +9,7 @@ utils_path = os.path.abspath(os.path.join(FILE, '../../../utils/pb/fraud_detecti
 sys.path.insert(0, utils_path)
 import fraud_detection_pb2 as fraud_detection
 import fraud_detection_pb2_grpc as fraud_detection_grpc
+import json
 
 import grpc
 
@@ -51,17 +52,37 @@ def checkout():
     """
     # Print request object data
     print("Request Data:", request.json)
-
+    request_parsed = dict(request.json)
+    print('0000',request_parsed,'000')
     # Dummy response following the provided YAML specification for the bookstore
     order_status_response = {
-        'orderId': '12345',
-        'status': 'Order Approved',
+        'orderId': 'random',
+        'status': 'to be updated',
+        'orderedBook' : [{ 
+                             'title':request_parsed['items'][0]['name'],
+                           'pieces': request_parsed['items'][0]['quantity'],
+                           'total' : request_parsed['items'][0]['total'],
+                            'author' : request_parsed['items'][0]['author']
+        }],
+        # { 
+        #      'bookname':request_parsed['items']['name'],
+        #      'bookauthor':request_parsed['items']['author'],
+        #      'bookquantity':request_parsed['items']['quantity'],
+        #      'booktotal':request_parsed['items']['total']
+        # },
         'suggestedBooks': [
             {'bookId': '123', 'title': 'Dummy Book 1', 'author': 'Author 1'},
             {'bookId': '456', 'title': 'Dummy Book 2', 'author': 'Author 2'}
         ]
-    }
 
+        # Read the contents of request.json
+        # print(request.json)
+
+    # Write the contents into output.json
+
+
+    }
+    print(order_status_response)
     return order_status_response
 
 

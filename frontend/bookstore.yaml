@@ -134,6 +134,19 @@ components:
                 type: string
               author:
                 type: string
+        orderedBook:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              author:
+                type: string
+              totalprice:
+                type: string
+              pieces:
+                type: string
 
     ErrorResponse:
       type: object

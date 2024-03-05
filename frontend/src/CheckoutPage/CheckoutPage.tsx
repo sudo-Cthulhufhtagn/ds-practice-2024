@@ -61,7 +61,7 @@ const CheckoutPage: React.FC = () => {
 
         try {
 
-            const response = await axios.post('http://0.0.0.0:8081/checkout', {
+            const response = await axios.post('http://localhost:8081/checkout', {
                 user: {
                     name: formData.userName,
                     contact: formData.userContact,
@@ -72,12 +72,13 @@ const CheckoutPage: React.FC = () => {
                     cvv: formData.creditCardCVV,
                 },
                 userComment: formData.userComment,
-                items: [
-                    {
+                items:
+                    [{
                         name: book.title,
-                        quantity: 1,
-                    },
-                ],
+                        quantity: book.quantityAdjustment,
+                        total: book.totalAmount,
+                        author: book.author
+                    }],
                 discountCode: formData.discountCode,
                 shippingMethod: formData.shippingMethod,
                 giftMessage: formData.giftMessage,
