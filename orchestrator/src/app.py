@@ -11,10 +11,14 @@ utils_path = os.path.abspath(os.path.join(FILE, '../../../utils/pb/fraud_detecti
 sys.path.insert(0, utils_path)
 utils_path = os.path.abspath(os.path.join(FILE, '../../../utils/pb/transaction_verification'))
 sys.path.insert(0, utils_path)
+utils_path = os.path.abspath(os.path.join(FILE, '../../../utils/pb/suggestion'))
+sys.path.insert(0, utils_path)
 import fraud_detection_pb2 as fraud_detection
 import fraud_detection_pb2_grpc as fraud_detection_grpc
 import transaction_verification_pb2 as transaction_verification
 import transaction_verification_pb2_grpc as transaction_verification_grpc
+import suggestion_pb2 as suggestion
+import suggestion_pb2_grpc as suggestion_grpc
 import json
 
 import grpc
@@ -45,6 +49,15 @@ def transaction_check(data):
         # Call the service through the stub object.
         response = stub.TransactionCheck(transaction_verification.TransactionRequest(expiration_date=data))
     return response.status
+
+def suggestion_request(data):
+    # Establish a connection with the fraud-detection gRPC service.
+    with grpc.insecure_channel('suggestion:50053') as channel:
+        # Create a stub object.
+        stub = suggestion_grpc.SuggestionServiceStub(channel)
+        # Call the service through the stub object.
+        response = stub.SuggestionPropose(suggestion.SuggestionRequest(input=data))
+    return response.suggestion
 
 # Import Flask.
 # Flask is a web framework for Python.
@@ -88,6 +101,7 @@ def checkout():
         # for service in [fraud_check, transaction_check]:
         futures_list.append(e.submit(fraud_check, request_parsed['creditCard']['number']))
         futures_list.append(e.submit(transaction_check, request_parsed['creditCard']['expirationDate']))
+        futures_list.append(e.submit(suggestion_request, 'dummy'))
         for i, future in enumerate(futures.as_completed(futures_list)):
             codes[i] = future.result()
             
@@ -116,10 +130,12 @@ def checkout():
         #      'bookquantity':request_parsed['items']['quantity'],
         #      'booktotal':request_parsed['items']['total']
         # },
-        'suggestedBooks': [
-            {'bookId': '123', 'title': 'Dummy Book 1', 'author': 'Author 1'},
-            {'bookId': '456', 'title': 'Dummy Book 2', 'author': 'Author 2'}
-        ]
+        'suggestedBooks': 
+                json.loads(codes[i]),
+        #     [
+        #     {'bookId': '123', 'title': 'Dummy Book 1', 'author': 'Author 1'},
+        #     {'bookId': '456', 'title': 'Dummy Book 2', 'author': 'Author 2'}
+        # ]
 
         # Read the contents of request.json
         # print(request.json)
