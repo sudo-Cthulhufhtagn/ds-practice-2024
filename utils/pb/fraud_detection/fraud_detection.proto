@@ -6,6 +6,18 @@ service HelloService {
     rpc SayHello (HelloRequest) returns (HelloResponse);
 }
 
+service FraudService {
+    rpc FraudCheck (FraudRequest) returns (FraudResponse);
+}
+
+message FraudRequest {
+    string bank_card = 1;
+}
+
+message FraudResponse {
+    bool status = 1;
+}
+
 message HelloRequest {
     string name = 1;
 }

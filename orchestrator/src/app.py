@@ -1,3 +1,5 @@
+from concurrent.futures import ThreadPoolExecutor
+from concurrent import futures
 import sys
 import os
 
@@ -7,8 +9,12 @@ import os
 FILE = __file__ if '__file__' in globals() else os.getenv("PYTHONFILE", "")
 utils_path = os.path.abspath(os.path.join(FILE, '../../../utils/pb/fraud_detection'))
 sys.path.insert(0, utils_path)
+utils_path = os.path.abspath(os.path.join(FILE, '../../../utils/pb/transaction_verification'))
+sys.path.insert(0, utils_path)
 import fraud_detection_pb2 as fraud_detection
 import fraud_detection_pb2_grpc as fraud_detection_grpc
+import transaction_verification_pb2 as transaction_verification
+import transaction_verification_pb2_grpc as transaction_verification_grpc
 import json
 
 import grpc
@@ -21,6 +27,24 @@ def greet(name='you'):
         # Call the service through the stub object.
         response = stub.SayHello(fraud_detection.HelloRequest(name=name))
     return response.greeting
+
+def fraud_check(card_data):
+    # Establish a connection with the fraud-detection gRPC service.
+    with grpc.insecure_channel('fraud_detection:50051') as channel:
+        # Create a stub object.
+        stub = fraud_detection_grpc.FraudServiceStub(channel)
+        # Call the service through the stub object.
+        response = stub.FraudCheck(fraud_detection.FraudRequest(bank_card=card_data))
+    return response.status
+
+def transaction_check(data):
+    # Establish a connection with the fraud-detection gRPC service.
+    with grpc.insecure_channel('transaction_verification:50052') as channel:
+        # Create a stub object.
+        stub = transaction_verification_grpc.TransactionServiceStub(channel)
+        # Call the service through the stub object.
+        response = stub.TransactionCheck(transaction_verification.TransactionRequest(expiration_date=data))
+    return response.status
 
 # Import Flask.
 # Flask is a web framework for Python.
@@ -41,9 +65,11 @@ def index():
     Responds with 'Hello, [name]' when a GET request is made to '/' endpoint.
     """
     # Test the fraud-detection gRPC service.
-    response = greet(name='orchestrator')
+    # response = greet(name='orchestrator')
+    response = fraud_check('1111222233334444')
     # Return the response.
     return response
+
 
 @app.route('/checkout', methods=['POST'])
 def checkout():
@@ -54,10 +80,30 @@ def checkout():
     print("Request Data:", request.json)
     request_parsed = dict(request.json)
     print('0000',request_parsed,'000')
+    
+    n_services = 3
+    codes = [None]*n_services
+    with ThreadPoolExecutor(n_services) as e:
+        futures_list = []
+        # for service in [fraud_check, transaction_check]:
+        futures_list.append(e.submit(fraud_check, request_parsed['creditCard']['number']))
+        futures_list.append(e.submit(transaction_check, request_parsed['creditCard']['expirationDate']))
+        for i, future in enumerate(futures.as_completed(futures_list)):
+            codes[i] = future.result()
+            
+        
+    print('sttt', codes)
+    if codes[0]:
+        status = "Fraud detected"
+    elif codes[1]:
+        status = "Transaction failed"
+    else:
+        status = "Order placed"
+        
     # Dummy response following the provided YAML specification for the bookstore
     order_status_response = {
         'orderId': 'random',
-        'status': 'to be updated',
+        'status': status,
         'orderedBook' : [{ 
                              'title':request_parsed['items'][0]['name'],
                            'pieces': request_parsed['items'][0]['quantity'],

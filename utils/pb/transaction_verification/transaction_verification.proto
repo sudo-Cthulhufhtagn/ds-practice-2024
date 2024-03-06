@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package transaction;
+
+
+service TransactionService {
+    rpc TransactionCheck (TransactionRequest) returns (TransactionResponse);
+}
+
+message TransactionRequest {
+    string expiration_date = 1;
+}
+
+message TransactionResponse {
+    bool status = 1;
+}
