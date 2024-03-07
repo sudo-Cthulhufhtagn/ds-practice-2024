@@ -12,15 +12,21 @@ import transaction_verification_pb2_grpc as transaction_verification_grpc
 
 import grpc
 from concurrent import futures
+import logging
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, 
+                    format="[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
 
 import datetime
 
 class TransactionService(transaction_verification_grpc.TransactionService):
     # Create an RPC function to say hello
     def TransactionCheck(self, request, context):
+        logging.info("TransactionCheck request received")
         response = transaction_verification.TransactionResponse()
         # check only year because why not
-        response.status = int(request.expiration_date.split('/')[-1])<int(datetime.datetime.now().strftime("%y"))
+        response.status = int(request.expiration_date.split('/')[-1])<int(datetime.datetime.now().strftime("%y")) or\
+            int(request.expiration_date.split('/')[0])<int(datetime.datetime.now().strftime("%m"))
+        logging.info("TransactionCheck request processed, outcome: " + str(response.status))
         # Return the response object
         return response
 

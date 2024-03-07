@@ -9,6 +9,9 @@ utils_path = os.path.abspath(os.path.join(FILE, '../../../utils/pb/fraud_detecti
 sys.path.insert(0, utils_path)
 import fraud_detection_pb2 as fraud_detection
 import fraud_detection_pb2_grpc as fraud_detection_grpc
+import logging
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, 
+                    format="[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
 
 import grpc
 from concurrent import futures
@@ -31,9 +34,11 @@ class HelloService(fraud_detection_grpc.HelloServiceServicer):
 class FraudService(fraud_detection_grpc.FraudServiceServicer):
     # Create an RPC function to say hello
     def FraudCheck(self, request, context):
+        logging.info("FraudCheck request received")
         response = fraud_detection.FraudResponse()
         response.status = request.bank_card.isnumeric() and len(request.bank_card) == 16
         response.status = not response.status
+        logging.info("FraudCheck request processed, outcome: " + str(response.status))
         # Return the response object
         return response
 

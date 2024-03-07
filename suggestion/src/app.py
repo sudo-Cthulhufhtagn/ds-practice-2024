@@ -11,6 +11,13 @@ sys.path.insert(0, utils_path)
 import suggestion_pb2 as suggestion
 import suggestion_pb2_grpc as suggestion_grpc
 
+import logging
+
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, 
+                    format="[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
+
+
+
 import grpc
 from concurrent import futures
 
@@ -19,6 +26,7 @@ import datetime
 class SuggestionService(suggestion_grpc.SuggestionService):
     # Create an RPC function to say hello
     def SuggestionPropose(self, request, context):
+        logging.info("SuggestionPropose request received")
         response = suggestion.SuggestionResponse()
         # check only year because why not
         response.suggestion = json.dumps([
@@ -27,6 +35,7 @@ class SuggestionService(suggestion_grpc.SuggestionService):
             {'bookId': '456', 'title': 'Dummy Book 2', 'author': 'Author 2'}
         ])
         # Return the response object
+        logging.info("SuggestionPropose request processed")
         return response
 
 def serve():

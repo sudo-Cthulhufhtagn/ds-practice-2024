@@ -21,6 +21,7 @@ import suggestion_pb2 as suggestion
 import suggestion_pb2_grpc as suggestion_grpc
 import json
 
+
 import grpc
 
 def greet(name='you'):
@@ -78,8 +79,7 @@ def index():
     Responds with 'Hello, [name]' when a GET request is made to '/' endpoint.
     """
     # Test the fraud-detection gRPC service.
-    # response = greet(name='orchestrator')
-    response = fraud_check('1111222233334444')
+    response = greet(name='orchestrator')
     # Return the response.
     return response
 
@@ -90,23 +90,24 @@ def checkout():
     Responds with a JSON object containing the order ID, status, and suggested books.
     """
     # Print request object data
-    print("Request Data:", request.json)
     request_parsed = dict(request.json)
-    print('0000',request_parsed,'000')
+    app.logger.info(f"Incoming request with data: {request_parsed}")
     
     n_services = 3
     codes = [None]*n_services
     with ThreadPoolExecutor(n_services) as e:
-        futures_list = []
-        # for service in [fraud_check, transaction_check]:
-        futures_list.append(e.submit(fraud_check, request_parsed['creditCard']['number']))
-        futures_list.append(e.submit(transaction_check, request_parsed['creditCard']['expirationDate']))
-        futures_list.append(e.submit(suggestion_request, 'dummy'))
-        for i, future in enumerate(futures.as_completed(futures_list)):
-            codes[i] = future.result()
-            
-        
-    print('sttt', codes)
+        futures_store = {
+            e.submit(fraud_check, request_parsed['creditCard']['number']): 0,
+            e.submit(transaction_check, request_parsed['creditCard']['expirationDate']): 1,
+            e.submit(suggestion_request, 'dummy'): 2,
+        }
+
+        app.logger.info(f"All microservices requests submitted")
+        for future in futures.as_completed(futures_store):
+            codes[futures_store[future]] = future.result()
+    app.logger.info(f"All microservices requests completed, results: {codes}")
+    app.logger.info(f"Results: {codes}")
+                    
     if codes[0]:
         status = "Fraud detected"
     elif codes[1]:
@@ -131,7 +132,7 @@ def checkout():
         #      'booktotal':request_parsed['items']['total']
         # },
         'suggestedBooks': 
-                json.loads(codes[i]),
+                json.loads(codes[2]),
         #     [
         #     {'bookId': '123', 'title': 'Dummy Book 1', 'author': 'Author 1'},
         #     {'bookId': '456', 'title': 'Dummy Book 2', 'author': 'Author 2'}
@@ -144,7 +145,6 @@ def checkout():
 
 
     }
-    print(order_status_response)
     return order_status_response
 
 
@@ -152,4 +152,4 @@ if __name__ == '__main__':
     # Run the app in debug mode to enable hot reloading.
     # This is useful for development.
     # The default port is 5000.
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
