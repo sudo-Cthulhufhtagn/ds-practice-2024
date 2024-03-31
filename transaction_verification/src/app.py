@@ -25,7 +25,11 @@ class TransactionService(transaction_verification_grpc.TransactionService):
         response = transaction_verification.TransactionResponse()
         # check only year because why not
         response.status = int(request.expiration_date.split('/')[-1])<int(datetime.datetime.now().strftime("%y")) or\
-            int(request.expiration_date.split('/')[0])<int(datetime.datetime.now().strftime("%m"))
+            (
+                int(request.expiration_date.split('/')[-1])==int(datetime.datetime.now().strftime("%y")) and 
+                int(request.expiration_date.split('/')[0])<int(datetime.datetime.now().strftime("%m"))
+            )
+            
         logging.info("TransactionCheck request processed, outcome: " + str(response.status))
         # Return the response object
         return response
