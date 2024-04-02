@@ -14,6 +14,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG,
                     format="[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
 
 import grpc
+import datetime
 from concurrent import futures
 
 # Create a class to define the server functions, derived from
@@ -33,14 +34,25 @@ class HelloService(fraud_detection_grpc.HelloServiceServicer):
 
 class FraudService(fraud_detection_grpc.FraudServiceServicer):
     # Create an RPC function to say hello
-    def FraudCheck(self, request, context):
+    def FraudExp(self, request, context):
         logging.info("FraudCheck request received")
-        response = fraud_detection.FraudResponse()
-        response.status = request.bank_card.isnumeric() and len(request.bank_card) == 16
-        response.status = not response.status
-        logging.info("FraudCheck request processed, outcome: " + str(response.status))
+        response = fraud_detection.ExpResponse()
+        response.status = int(request.ExpDate.split('/')[-1])<int(datetime.datetime.now().strftime("%y")) or\
+        (
+            int(request.ExpDate.split('/')[-1])==int(datetime.datetime.now().strftime("%y")) and 
+            int(request.ExpDate.split('/')[0])<int(datetime.datetime.now().strftime("%m"))
+        )
+        logging.info("FraudCheck ExpDate request processed, outcome: " + str(response.status))
         # Return the response object
         return response
+    
+    def FraudName(self, request, context):
+        logging.info("FraudCheck request received")
+        response2 = fraud_detection.NameResponse()
+        response2.status2 = not request.name.isalpha()
+        logging.info("FraudCheck name request processed, outcome: " + str(response2.status2))
+        # Return the response object
+        return response2
 
 def serve():
     # Create a gRPC server

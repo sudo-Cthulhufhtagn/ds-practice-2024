@@ -16,23 +16,33 @@ import logging
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, 
                     format="[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
 
-import datetime
 
 class TransactionService(transaction_verification_grpc.TransactionService):
     # Create an RPC function to say hello
     def TransactionCheck(self, request, context):
         logging.info("TransactionCheck request received")
         response = transaction_verification.TransactionResponse()
-        # check only year because why not
-        response.status = int(request.expiration_date.split('/')[-1])<int(datetime.datetime.now().strftime("%y")) or\
-            (
-                int(request.expiration_date.split('/')[-1])==int(datetime.datetime.now().strftime("%y")) and 
-                int(request.expiration_date.split('/')[0])<int(datetime.datetime.now().strftime("%m"))
-            )
-            
+        response.status = bool(request.name=='' and request.contact=='' and request.address=='')
         logging.info("TransactionCheck request processed, outcome: " + str(response.status))
         # Return the response object
         return response
+    
+    def BookEmpty(self, request, context):
+        logging.info("BookEmpty request received")
+        response2 = transaction_verification.BookResponse()
+        response2.status2 = request.book==""
+        logging.info("BookEmpty request processed, outcome: " + str(response2.status2))
+        # Return the response object
+        return response2
+    
+    def CardCheck(self, request, context):
+        logging.info("CardCheck request received")
+        response3 = transaction_verification.CardResponse()
+        response3.status3 = request.card.isnumeric() and len(request.card) == 16
+        response3.status3 = not response3.status3
+        logging.info("CardCheck request processed, outcome: " + str(response3.status3))
+        return response3
+
 
 def serve():
     # Create a gRPC server

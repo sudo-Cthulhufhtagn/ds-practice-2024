@@ -4,13 +4,33 @@ package transaction;
 
 
 service TransactionService {
+    rpc BookEmpty (BookRequest) returns (BookResponse);
     rpc TransactionCheck (TransactionRequest) returns (TransactionResponse);
+    rpc CardCheck(CardRequest) returns (CardResponse);
+}
+
+message BookRequest {
+    string book = 1;
+}
+
+message BookResponse {
+    bool status2 = 1;
+}
+
+message CardRequest {
+    string card = 1;
 }
 
 message TransactionRequest {
-    string expiration_date = 1;
+    string name = 1;
+    string contact = 2;
+    string address = 3;
 }
 
 message TransactionResponse {
     bool status = 1;
+}
+
+message CardResponse {
+    bool status3 = 1;
 }

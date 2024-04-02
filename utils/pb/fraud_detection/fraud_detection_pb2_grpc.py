@@ -75,17 +75,28 @@ class FraudServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.FraudCheck = channel.unary_unary(
-                '/hello.FraudService/FraudCheck',
-                request_serializer=fraud__detection__pb2.FraudRequest.SerializeToString,
-                response_deserializer=fraud__detection__pb2.FraudResponse.FromString,
+        self.FraudName = channel.unary_unary(
+                '/hello.FraudService/FraudName',
+                request_serializer=fraud__detection__pb2.NameRequest.SerializeToString,
+                response_deserializer=fraud__detection__pb2.NameResponse.FromString,
+                )
+        self.FraudExp = channel.unary_unary(
+                '/hello.FraudService/FraudExp',
+                request_serializer=fraud__detection__pb2.ExpRequest.SerializeToString,
+                response_deserializer=fraud__detection__pb2.ExpResponse.FromString,
                 )
 
 
 class FraudServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def FraudCheck(self, request, context):
+    def FraudName(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def FraudExp(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -94,10 +105,15 @@ class FraudServiceServicer(object):
 
 def add_FraudServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'FraudCheck': grpc.unary_unary_rpc_method_handler(
-                    servicer.FraudCheck,
-                    request_deserializer=fraud__detection__pb2.FraudRequest.FromString,
-                    response_serializer=fraud__detection__pb2.FraudResponse.SerializeToString,
+            'FraudName': grpc.unary_unary_rpc_method_handler(
+                    servicer.FraudName,
+                    request_deserializer=fraud__detection__pb2.NameRequest.FromString,
+                    response_serializer=fraud__detection__pb2.NameResponse.SerializeToString,
+            ),
+            'FraudExp': grpc.unary_unary_rpc_method_handler(
+                    servicer.FraudExp,
+                    request_deserializer=fraud__detection__pb2.ExpRequest.FromString,
+                    response_serializer=fraud__detection__pb2.ExpResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -110,7 +126,7 @@ class FraudService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def FraudCheck(request,
+    def FraudName(request,
             target,
             options=(),
             channel_credentials=None,
@@ -120,8 +136,25 @@ class FraudService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/hello.FraudService/FraudCheck',
-            fraud__detection__pb2.FraudRequest.SerializeToString,
-            fraud__detection__pb2.FraudResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/hello.FraudService/FraudName',
+            fraud__detection__pb2.NameRequest.SerializeToString,
+            fraud__detection__pb2.NameResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def FraudExp(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/hello.FraudService/FraudExp',
+            fraud__detection__pb2.ExpRequest.SerializeToString,
+            fraud__detection__pb2.ExpResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

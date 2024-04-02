@@ -7,14 +7,23 @@ service HelloService {
 }
 
 service FraudService {
-    rpc FraudCheck (FraudRequest) returns (FraudResponse);
+    rpc FraudName (NameRequest) returns (NameResponse);
+    rpc FraudExp (ExpRequest) returns (ExpResponse);
 }
 
-message FraudRequest {
-    string bank_card = 1;
+message NameRequest{
+    string name = 1;
 }
 
-message FraudResponse {
+message ExpRequest {
+    string ExpDate = 1;
+}
+
+message NameResponse{
+    bool status2 = 1;
+}
+
+message ExpResponse {
     bool status = 1;
 }
 

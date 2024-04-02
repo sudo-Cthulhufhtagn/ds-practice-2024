@@ -33,23 +33,28 @@ def greet(name='you'):
         response = stub.SayHello(fraud_detection.HelloRequest(name=name))
     return response.greeting
 
-def fraud_check(card_data):
+def fraud_check(usernamep, expdatep):
     # Establish a connection with the fraud-detection gRPC service.
     with grpc.insecure_channel('fraud_detection:50051') as channel:
         # Create a stub object.
         stub = fraud_detection_grpc.FraudServiceStub(channel)
         # Call the service through the stub object.
-        response = stub.FraudCheck(fraud_detection.FraudRequest(bank_card=card_data))
-    return response.status
+        response = stub.FraudExp(fraud_detection.ExpRequest(ExpDate=expdatep))
+        response2 = stub.FraudName(fraud_detection.NameRequest(name=usernamep))
+    return response.status or response2.status2
 
-def transaction_check(data):
+
+def transaction_check(namep,contactp, addressp, bookp, cardp):
     # Establish a connection with the fraud-detection gRPC service.
     with grpc.insecure_channel('transaction_verification:50052') as channel:
         # Create a stub object.
         stub = transaction_verification_grpc.TransactionServiceStub(channel)
         # Call the service through the stub object.
-        response = stub.TransactionCheck(transaction_verification.TransactionRequest(expiration_date=data))
-    return response.status
+        response2 = stub.BookEmpty(transaction_verification.BookRequest(book=bookp))
+        response = stub.TransactionCheck(transaction_verification.TransactionRequest(name=namep, contact=contactp,address=addressp))
+        response3 = stub.CardCheck(transaction_verification.CardRequest(card=cardp))
+
+    return ( response.status or response2.status2 or response3.status3 )
 
 def suggestion_request(data):
     # Establish a connection with the fraud-detection gRPC service.
@@ -97,8 +102,11 @@ def checkout():
     codes = [None]*n_services
     with ThreadPoolExecutor(n_services) as e:
         futures_store = {
-            e.submit(fraud_check, request_parsed['creditCard']['number']): 0,
-            e.submit(transaction_check, request_parsed['creditCard']['expirationDate']): 1,
+            e.submit(fraud_check, request_parsed['user']['name'],
+                     request_parsed['creditCard']['expirationDate']): 0,
+            e.submit(transaction_check, request_parsed['user']['name'],
+                     request_parsed['user']['contact'], request_parsed['billingAddress']['zip'],
+                     request_parsed['items'][0]['name'], request_parsed['creditCard']['number']): 1,
             e.submit(suggestion_request, 'dummy'): 2,
         }
 
