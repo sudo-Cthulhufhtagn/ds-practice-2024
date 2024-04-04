@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10suggestion.proto\x12\nsuggestion\"\"\n\x11SuggestionRequest\x12\r\n\x05input\x18\x01 \x01(\t\"(\n\x12SuggestionResponse\x12\x12\n\nsuggestion\x18\x01 \x01(\t2g\n\x11SuggestionService\x12R\n\x11SuggestionPropose\x12\x1d.suggestion.SuggestionRequest\x1a\x1e.suggestion.SuggestionResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10suggestion.proto\x12\nsuggestion\"=\n\x11SuggestionRequest\x12\r\n\x05input\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\r\n\x05\x63lock\x18\x03 \x01(\t\"C\n\x12SuggestionResponse\x12\x12\n\nsuggestion\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\r\n\x05\x63lock\x18\x03 \x01(\t2g\n\x11SuggestionService\x12R\n\x11SuggestionPropose\x12\x1d.suggestion.SuggestionRequest\x1a\x1e.suggestion.SuggestionResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -22,9 +22,9 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'suggestion_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   _globals['_SUGGESTIONREQUEST']._serialized_start=32
-  _globals['_SUGGESTIONREQUEST']._serialized_end=66
-  _globals['_SUGGESTIONRESPONSE']._serialized_start=68
-  _globals['_SUGGESTIONRESPONSE']._serialized_end=108
-  _globals['_SUGGESTIONSERVICE']._serialized_start=110
-  _globals['_SUGGESTIONSERVICE']._serialized_end=213
+  _globals['_SUGGESTIONREQUEST']._serialized_end=93
+  _globals['_SUGGESTIONRESPONSE']._serialized_start=95
+  _globals['_SUGGESTIONRESPONSE']._serialized_end=162
+  _globals['_SUGGESTIONSERVICE']._serialized_start=164
+  _globals['_SUGGESTIONSERVICE']._serialized_end=267
 # @@protoc_insertion_point(module_scope)

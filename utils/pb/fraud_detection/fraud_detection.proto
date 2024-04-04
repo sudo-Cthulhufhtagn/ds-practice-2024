@@ -13,18 +13,26 @@ service FraudService {
 
 message NameRequest{
     string name = 1;
+    string id = 2;
+    string clock = 3;
 }
 
 message ExpRequest {
     string ExpDate = 1;
+    string id = 2;
+    string clock = 3;
 }
 
 message NameResponse{
     bool status2 = 1;
+    string id = 2;
+    string clock = 3;
 }
 
 message ExpResponse {
     bool status = 1;
+    string id = 2;
+    string clock = 3;
 }
 
 message HelloRequest {

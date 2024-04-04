@@ -4,17 +4,45 @@ from typing import ClassVar as _ClassVar, Optional as _Optional
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
-class FraudRequest(_message.Message):
-    __slots__ = ("bank_card",)
-    BANK_CARD_FIELD_NUMBER: _ClassVar[int]
-    bank_card: str
-    def __init__(self, bank_card: _Optional[str] = ...) -> None: ...
+class NameRequest(_message.Message):
+    __slots__ = ("name", "id", "clock")
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    CLOCK_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    id: str
+    clock: str
+    def __init__(self, name: _Optional[str] = ..., id: _Optional[str] = ..., clock: _Optional[str] = ...) -> None: ...
 
-class FraudResponse(_message.Message):
-    __slots__ = ("status",)
+class ExpRequest(_message.Message):
+    __slots__ = ("ExpDate", "id", "clock")
+    EXPDATE_FIELD_NUMBER: _ClassVar[int]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    CLOCK_FIELD_NUMBER: _ClassVar[int]
+    ExpDate: str
+    id: str
+    clock: str
+    def __init__(self, ExpDate: _Optional[str] = ..., id: _Optional[str] = ..., clock: _Optional[str] = ...) -> None: ...
+
+class NameResponse(_message.Message):
+    __slots__ = ("status2", "id", "clock")
+    STATUS2_FIELD_NUMBER: _ClassVar[int]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    CLOCK_FIELD_NUMBER: _ClassVar[int]
+    status2: bool
+    id: str
+    clock: str
+    def __init__(self, status2: bool = ..., id: _Optional[str] = ..., clock: _Optional[str] = ...) -> None: ...
+
+class ExpResponse(_message.Message):
+    __slots__ = ("status", "id", "clock")
     STATUS_FIELD_NUMBER: _ClassVar[int]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    CLOCK_FIELD_NUMBER: _ClassVar[int]
     status: bool
-    def __init__(self, status: bool = ...) -> None: ...
+    id: str
+    clock: str
+    def __init__(self, status: bool = ..., id: _Optional[str] = ..., clock: _Optional[str] = ...) -> None: ...
 
 class HelloRequest(_message.Message):
     __slots__ = ("name",)

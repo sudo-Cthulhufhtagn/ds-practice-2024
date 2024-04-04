@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15\x66raud_detection.proto\x12\x05hello\"\x1b\n\x0bNameRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\nExpRequest\x12\x0f\n\x07\x45xpDate\x18\x01 \x01(\t\"\x1f\n\x0cNameResponse\x12\x0f\n\x07status2\x18\x01 \x01(\x08\"\x1d\n\x0b\x45xpResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\"\x1c\n\x0cHelloRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"!\n\rHelloResponse\x12\x10\n\x08greeting\x18\x01 \x01(\t2E\n\x0cHelloService\x12\x35\n\x08SayHello\x12\x13.hello.HelloRequest\x1a\x14.hello.HelloResponse2w\n\x0c\x46raudService\x12\x34\n\tFraudName\x12\x12.hello.NameRequest\x1a\x13.hello.NameResponse\x12\x31\n\x08\x46raudExp\x12\x11.hello.ExpRequest\x1a\x12.hello.ExpResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15\x66raud_detection.proto\x12\x05hello\"6\n\x0bNameRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\r\n\x05\x63lock\x18\x03 \x01(\t\"8\n\nExpRequest\x12\x0f\n\x07\x45xpDate\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\r\n\x05\x63lock\x18\x03 \x01(\t\":\n\x0cNameResponse\x12\x0f\n\x07status2\x18\x01 \x01(\x08\x12\n\n\x02id\x18\x02 \x01(\t\x12\r\n\x05\x63lock\x18\x03 \x01(\t\"8\n\x0b\x45xpResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\n\n\x02id\x18\x02 \x01(\t\x12\r\n\x05\x63lock\x18\x03 \x01(\t\"\x1c\n\x0cHelloRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"!\n\rHelloResponse\x12\x10\n\x08greeting\x18\x01 \x01(\t2E\n\x0cHelloService\x12\x35\n\x08SayHello\x12\x13.hello.HelloRequest\x1a\x14.hello.HelloResponse2w\n\x0c\x46raudService\x12\x34\n\tFraudName\x12\x12.hello.NameRequest\x1a\x13.hello.NameResponse\x12\x31\n\x08\x46raudExp\x12\x11.hello.ExpRequest\x1a\x12.hello.ExpResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -22,19 +22,19 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'fraud_detection_pb2', _glob
 if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   _globals['_NAMEREQUEST']._serialized_start=32
-  _globals['_NAMEREQUEST']._serialized_end=59
-  _globals['_EXPREQUEST']._serialized_start=61
-  _globals['_EXPREQUEST']._serialized_end=90
-  _globals['_NAMERESPONSE']._serialized_start=92
-  _globals['_NAMERESPONSE']._serialized_end=123
-  _globals['_EXPRESPONSE']._serialized_start=125
-  _globals['_EXPRESPONSE']._serialized_end=154
-  _globals['_HELLOREQUEST']._serialized_start=156
-  _globals['_HELLOREQUEST']._serialized_end=184
-  _globals['_HELLORESPONSE']._serialized_start=186
-  _globals['_HELLORESPONSE']._serialized_end=219
-  _globals['_HELLOSERVICE']._serialized_start=221
-  _globals['_HELLOSERVICE']._serialized_end=290
-  _globals['_FRAUDSERVICE']._serialized_start=292
-  _globals['_FRAUDSERVICE']._serialized_end=411
+  _globals['_NAMEREQUEST']._serialized_end=86
+  _globals['_EXPREQUEST']._serialized_start=88
+  _globals['_EXPREQUEST']._serialized_end=144
+  _globals['_NAMERESPONSE']._serialized_start=146
+  _globals['_NAMERESPONSE']._serialized_end=204
+  _globals['_EXPRESPONSE']._serialized_start=206
+  _globals['_EXPRESPONSE']._serialized_end=262
+  _globals['_HELLOREQUEST']._serialized_start=264
+  _globals['_HELLOREQUEST']._serialized_end=292
+  _globals['_HELLORESPONSE']._serialized_start=294
+  _globals['_HELLORESPONSE']._serialized_end=327
+  _globals['_HELLOSERVICE']._serialized_start=329
+  _globals['_HELLOSERVICE']._serialized_end=398
+  _globals['_FRAUDSERVICE']._serialized_start=400
+  _globals['_FRAUDSERVICE']._serialized_end=519
 # @@protoc_insertion_point(module_scope)

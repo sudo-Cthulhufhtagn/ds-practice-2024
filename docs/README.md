@@ -11,3 +11,11 @@ Both fraud detection and transaction verification services are returning `False`
 * Fraud detection: if bank card of the user is non numeric or has length different from 16 the buyer is most likely a fraud.
 * Transaction verification: if the card has not yet expired and user is not a fraud then the transaction MUST be valid
 * Orhcestrator: if either of the services returns `False`, update order status accordingly
+## Checkpoint V2
+
+Forget almost everything you saw before, and behold REDESIGN of the workflow!
+![img3](imgs/src3.png)
+
+And little 
+
+![img4](imgs/src4.gif)

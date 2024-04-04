@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package executor;
+
+
+service ExecutorService {
+    rpc ExecutorPropose (ExecutorRequest) returns (ExecutorResponse);
+}
+
+message ExecutorRequest {
+    string input = 1;
+    string id = 2;
+    int32 len_data = 3;
+}
+
+message ExecutorResponse {
+    string status = 1;
+    string id = 2;
+}

@@ -23,11 +23,25 @@ from concurrent import futures
 
 import datetime
 
+local_time_keeper = {
+    
+}
+service_identifier = 2
+
 class SuggestionService(suggestion_grpc.SuggestionService):
     # Create an RPC function to say hello
     def SuggestionPropose(self, request, context):
         logging.info("SuggestionPropose request received")
         response = suggestion.SuggestionResponse()
+        # get clock
+        request_clock = json.loads(request.clock)
+        # check if clock is in local_time_keeper
+        if request.id not in local_time_keeper:
+            logging.info("Clock not found, initializing")
+            local_time_keeper[request.id] = request_clock
+            
+        logging.info("Clock local: " + str(local_time_keeper[request.id]) + " Clock request: " + str(request_clock))
+        
         # check only year because why not
         response.suggestion = json.dumps([
             {'bookId': '123', 'title': 'Dummy Book 1', 'author': 'Author 1'},
@@ -36,6 +50,12 @@ class SuggestionService(suggestion_grpc.SuggestionService):
         ])
         # Return the response object
         logging.info("SuggestionPropose request processed")
+        
+        local_time_keeper[request.id][service_identifier] += 1
+        
+        response.clock = json.dumps(local_time_keeper[request.id])
+        response.id = request.id
+        logging.info("Clock: " + str(local_time_keeper[request.id]))
         return response
 
 def serve():

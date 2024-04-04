@@ -9,8 +9,12 @@ service SuggestionService {
 
 message SuggestionRequest {
     string input = 1;
+    string id = 2;
+    string clock = 3;
 }
 
 message SuggestionResponse {
     string suggestion = 1;
+    string id = 2;
+    string clock = 3;
 }

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package queue;
+
+
+service QueueService {
+    rpc QueuePropose (QueueRequest) returns (QueueResponse);
+}
+
+message QueueRequest {
+    string input = 1;
+    string id = 2;
+    int32 len_data = 3;
+}
+
+message QueueResponse {
+    string status = 1;
+    string id = 2;
+}

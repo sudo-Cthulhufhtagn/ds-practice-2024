@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1etransaction_verification.proto\x12\x0btransaction\"\x1b\n\x0b\x42ookRequest\x12\x0c\n\x04\x62ook\x18\x01 \x01(\t\"\x1f\n\x0c\x42ookResponse\x12\x0f\n\x07status2\x18\x01 \x01(\x08\"\x1b\n\x0b\x43\x61rdRequest\x12\x0c\n\x04\x63\x61rd\x18\x01 \x01(\t\"D\n\x12TransactionRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07\x63ontact\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\"%\n\x13TransactionResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\"\x1f\n\x0c\x43\x61rdResponse\x12\x0f\n\x07status3\x18\x01 \x01(\x08\x32\xef\x01\n\x12TransactionService\x12@\n\tBookEmpty\x12\x18.transaction.BookRequest\x1a\x19.transaction.BookResponse\x12U\n\x10TransactionCheck\x12\x1f.transaction.TransactionRequest\x1a .transaction.TransactionResponse\x12@\n\tCardCheck\x12\x18.transaction.CardRequest\x1a\x19.transaction.CardResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1etransaction_verification.proto\x12\x0btransaction\"6\n\x0b\x42ookRequest\x12\x0c\n\x04\x62ook\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\r\n\x05\x63lock\x18\x03 \x01(\t\":\n\x0c\x42ookResponse\x12\x0f\n\x07status2\x18\x01 \x01(\x08\x12\n\n\x02id\x18\x02 \x01(\t\x12\r\n\x05\x63lock\x18\x03 \x01(\t\"6\n\x0b\x43\x61rdRequest\x12\x0c\n\x04\x63\x61rd\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\r\n\x05\x63lock\x18\x03 \x01(\t\"_\n\x12TransactionRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07\x63ontact\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x12\n\n\x02id\x18\x04 \x01(\t\x12\r\n\x05\x63lock\x18\x05 \x01(\t\"@\n\x13TransactionResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\n\n\x02id\x18\x02 \x01(\t\x12\r\n\x05\x63lock\x18\x03 \x01(\t\":\n\x0c\x43\x61rdResponse\x12\x0f\n\x07status3\x18\x01 \x01(\x08\x12\n\n\x02id\x18\x02 \x01(\t\x12\r\n\x05\x63lock\x18\x03 \x01(\t2\xef\x01\n\x12TransactionService\x12@\n\tBookEmpty\x12\x18.transaction.BookRequest\x1a\x19.transaction.BookResponse\x12U\n\x10TransactionCheck\x12\x1f.transaction.TransactionRequest\x1a .transaction.TransactionResponse\x12@\n\tCardCheck\x12\x18.transaction.CardRequest\x1a\x19.transaction.CardResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -22,17 +22,17 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'transaction_verification_pb
 if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   _globals['_BOOKREQUEST']._serialized_start=47
-  _globals['_BOOKREQUEST']._serialized_end=74
-  _globals['_BOOKRESPONSE']._serialized_start=76
-  _globals['_BOOKRESPONSE']._serialized_end=107
-  _globals['_CARDREQUEST']._serialized_start=109
-  _globals['_CARDREQUEST']._serialized_end=136
-  _globals['_TRANSACTIONREQUEST']._serialized_start=138
-  _globals['_TRANSACTIONREQUEST']._serialized_end=206
-  _globals['_TRANSACTIONRESPONSE']._serialized_start=208
-  _globals['_TRANSACTIONRESPONSE']._serialized_end=245
-  _globals['_CARDRESPONSE']._serialized_start=247
-  _globals['_CARDRESPONSE']._serialized_end=278
-  _globals['_TRANSACTIONSERVICE']._serialized_start=281
-  _globals['_TRANSACTIONSERVICE']._serialized_end=520
+  _globals['_BOOKREQUEST']._serialized_end=101
+  _globals['_BOOKRESPONSE']._serialized_start=103
+  _globals['_BOOKRESPONSE']._serialized_end=161
+  _globals['_CARDREQUEST']._serialized_start=163
+  _globals['_CARDREQUEST']._serialized_end=217
+  _globals['_TRANSACTIONREQUEST']._serialized_start=219
+  _globals['_TRANSACTIONREQUEST']._serialized_end=314
+  _globals['_TRANSACTIONRESPONSE']._serialized_start=316
+  _globals['_TRANSACTIONRESPONSE']._serialized_end=380
+  _globals['_CARDRESPONSE']._serialized_start=382
+  _globals['_CARDRESPONSE']._serialized_end=440
+  _globals['_TRANSACTIONSERVICE']._serialized_start=443
+  _globals['_TRANSACTIONSERVICE']._serialized_end=682
 # @@protoc_insertion_point(module_scope)

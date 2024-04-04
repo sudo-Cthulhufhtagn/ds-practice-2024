@@ -11,26 +11,38 @@ service TransactionService {
 
 message BookRequest {
     string book = 1;
+    string id = 2;
+    string clock = 3;
 }
 
 message BookResponse {
     bool status2 = 1;
+    string id = 2;
+    string clock = 3;
 }
 
 message CardRequest {
     string card = 1;
+    string id = 2;
+    string clock = 3;
 }
 
 message TransactionRequest {
     string name = 1;
     string contact = 2;
     string address = 3;
+    string id = 4;
+    string clock = 5;
 }
 
 message TransactionResponse {
     bool status = 1;
+    string id = 2;
+    string clock = 3;
 }
 
 message CardResponse {
     bool status3 = 1;
+    string id = 2;
+    string clock = 3;
 }
