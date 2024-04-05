@@ -41,7 +41,7 @@ class ExecutorService(executor_grpc.ExecutorService):
         
         logging.info("ExecutorPropose executed order: " + str(request.id))
         
-        response = os.popen('curl -s --unix-socket /var/run/docker.sock http://localhost/containers/$HOSTNAME/json | jq -r .Name | xargs').read()
+        response = os.popen('curl -s --unix-socket /var/run/docker.sock http://localhost/containers/$HOSTNAME/json | jq -r .Name | xargs').read().strip()
         
         
         logging.info(f"ExecutorPropose worker: {response}")

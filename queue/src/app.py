@@ -49,10 +49,11 @@ def queue_worker():
             # logging.info("Queue content: " + str(priority_queue.get()))
             time.sleep(2)
             priority, item, id = priority_queue.get()
-            logging.info(f"Submitting request to executor id: {id}")
+            # current queue length 
+            logging.info(f"Submitting request to executor, remaining qeue: {priority_queue.qsize()} ")
             response = submit_executor_request(item, id)
             logging.info(f"Executor response: {response.status} for id: {id}")
-            time.sleep(10)
+            time.sleep(4)
             pass
 
 class QueueService(queue_grpc.QueueService):

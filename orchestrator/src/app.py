@@ -31,7 +31,7 @@ import json
 
 import grpc
 
-TIKTOK_MAGIC_SWITCH = False
+TIKTOK_MAGIC_SWITCH = True
 
 def greet(name='you'):
     # Establish a connection with the fraud-detection gRPC service.
