@@ -12,6 +12,7 @@ This is online bookshop project, with frontend and backend components(aka orches
   - [Checkpoint v3](#checkpoint-v3)
       - [Database replicas](#database-replicas)
         - [Order executor](#order-executor)
+        - [Distributed Commitment Protocol diagram](#distributed-commitment-protocol-diagram)
 
 ## Checkpoint V1 (Charlie)
 ### Architecture Diagram
@@ -70,3 +71,7 @@ Implemented two types of requests:
 
 ##### Order executor
 The order executor try to get number of books in the database by sending book id. If book does not exist the executor then creates initial dummy stock of 10 books. If book is ordrered again, stock decreases.
+
+##### Distributed Commitment Protocol diagram
+
+![img6](imgs/src6.gif)

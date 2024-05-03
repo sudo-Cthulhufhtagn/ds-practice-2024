@@ -6,9 +6,19 @@ package database;
 service DatabaseService {
     rpc DatabaseReader (DatabaseRead) returns (DatabaseResponse);
     rpc DatabaseWriter (DatabaseWrite) returns (DatabaseResponse);
+    rpc DatabasePreparer (DatabasePrepare) returns (DatabaseResponse);
+    rpc DatabaseCommiter (DatabaseCommit) returns (DatabaseResponse);
 }
 
 message DatabaseRead {
+    string key = 1;
+}
+
+message DatabasePrepare {
+    string key = 1;
+}
+
+message DatabaseCommit {
     string key = 1;
 }
 

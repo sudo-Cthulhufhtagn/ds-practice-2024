@@ -113,8 +113,31 @@ class DatabaseService(database_grpc.DatabaseService):
         
         return response
     
-    def Prepare(self, request, context):
+    def DatabasePreparer(self, request, context):
         
+        
+        logging.info(f"Database prepared")
+        
+        
+        response = database.DatabaseResponse()
+        
+        response.status = 'ok'
+        
+        return response
+    
+    def DatabaseCommiter(self, request, context):
+        
+        
+        logging.info(f"Database commited")
+        
+        response = database.DatabaseResponse()
+        
+        response.status = 'ok'
+        
+        return response
+        
+        
+ 
         
         
 
