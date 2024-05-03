@@ -13,6 +13,11 @@ import executor_pb2 as executore
 import executor_pb2_grpc as executor_grpc
 import subprocess
 
+utils_path = os.path.abspath(os.path.join(FILE, '../../../utils/pb/database'))
+sys.path.insert(0, utils_path)
+import database_pb2 as database
+import database_pb2_grpc as database_grpc
+
 import logging
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, 
@@ -45,6 +50,26 @@ class ExecutorService(executor_grpc.ExecutorService):
         
         
         logging.info(f"ExecutorPropose worker: {response}")
+        
+        for item in inp['items']:
+            
+            with grpc.insecure_channel('database:50055') as channel:
+                # Create a stub object.
+                stub = database_grpc.DatabaseServiceStub(channel)
+                response = stub.DatabaseReader(database.DatabaseRead(key=item['name']))
+                if not response.data:
+                    number = 10
+                else:
+                    response = json.loads(response.data)
+                    number = response['quantity']
+            
+        
+            with grpc.insecure_channel('database:50055') as channel:
+                # Create a stub object.
+                stub = database_grpc.DatabaseServiceStub(channel)
+                response = stub.DatabaseWriter(database.DatabaseWrite(key=item['name'], data=json.dumps({'quantity': number-1}), sender_id=-1))                
+                logging.info(f"ExecutorService sent {response} to DatabaseService")
+            
         
         response = executore.ExecutorResponse()
         

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package database;
+
+
+service DatabaseService {
+    rpc DatabaseReader (DatabaseRead) returns (DatabaseResponse);
+    rpc DatabaseWriter (DatabaseWrite) returns (DatabaseResponse);
+}
+
+message DatabaseRead {
+    string key = 1;
+}
+
+message DatabaseWrite {
+    string key = 1;
+    string data = 2;
+    int32 sender_id = 3;
+}
+
+message DatabaseResponse {
+    string status = 1;
+    string data = 2;
+}

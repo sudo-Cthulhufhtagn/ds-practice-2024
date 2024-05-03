@@ -9,6 +9,9 @@ This is online bookshop project, with frontend and backend components(aka orches
     - [Temporal relation](#temporal-relation)
     - [Order queue with priority](#order-queue-with-priority)
     - [Executor election mechanism](#executor-election-mechanism)
+  - [Checkpoint v3](#checkpoint-v3)
+      - [Database replicas](#database-replicas)
+        - [Order executor](#order-executor)
 
 ## Checkpoint V1 (Charlie)
 ### Architecture Diagram
@@ -54,3 +57,16 @@ The service was provided with docker api access, which is **unsafe**, but the on
 
 
 ![img4](imgs/src4.gif)
+
+## Checkpoint v3
+
+#### Database replicas
+The consistency is ensured using Primary-based protocol. The main node is always `replica-1` for simplicity. 
+Implemented two types of requests:
+ * Read: any node can return read result, since they are synced.
+ * Write: if `replica-1` is in conact, it will send write requests to other nodes before responging ok. If any other node is engeged, it will first send write request to `replica-1`, which will broadcast it to others.
+
+![img5](imgs/src5.gif)
+
+##### Order executor
+The order executor try to get number of books in the database by sending book id. If book does not exist the executor then creates initial dummy stock of 10 books. If book is ordrered again, stock decreases.
