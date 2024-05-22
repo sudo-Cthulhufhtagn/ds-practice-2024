@@ -11,11 +11,10 @@ export const Heros = () => {
                     </div>
                     <div className='col-4 col-md-4 container d-flex justify-content-center align-items-center'>
                         <div className='ml-2'>
-                            <h1>Ignite Your Imagination with Our Bestsellers!</h1>
+                            <h1>Ignite Your Imagination with Our Best events!</h1>
                             <p className='lead'>
-                                We believe there's a book for every reader and a reader for every book.
-                                Our shelves are brimming with tales that transport you to other worlds,
-                                ideas that challenge your perceptions, and narratives that tug at your heartstrings
+                                We believe there's an event for everyone. Whether you're a seasoned professional or just starting out,
+                                we have the perfect event for you. Join us and meet like-minded people who share your passion.
                             </p>
                                 <Link type='button' className='btn btn-outline-success' to='/search'>
                                     Explore books</Link>
@@ -26,10 +25,11 @@ export const Heros = () => {
                     <div className='col-4 col-md-4 container d-flex 
                         justify-content-center align-items-center'>
                         <div className='ml-2'>
-                            <h1>Every Book Holds a Secret. Unlock Yours Today!</h1>
+                            <h1>Every event matters</h1>
                             <p className='lead'>
-                                At [Your Bookstore's Name], every visit is an adventure, every book a new friend waiting to be met.
-                                We're more than just a bookstore; we're a community of dreamers, thinkers, and storytellers.
+                                We believe that every event is important. Whether you're attending a small gathering or a large conference,
+                                we want to make sure you have the best experience possible. That's why we work hard to bring you the best events
+                                from around the world.
                             </p>
                         </div>
                     </div>
@@ -60,11 +60,7 @@ export const Heros = () => {
                         <div className='mt-2'>
                             <h1>Our collection is always changing!</h1>
                             <p className='lead'>
-                                Try to check in daily as our collection is always changing! 
-                                We work nonstop to provide the most accurate book selection possible 
-                                for our Luv 2 Read students! We are diligent about our book selection 
-                                and our books are always going to be our 
-                                top priority.
+                                
                             </p>
                         </div>
                     </div>

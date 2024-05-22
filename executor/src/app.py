@@ -60,12 +60,15 @@ class ExecutorService(executor_grpc.ExecutorService):
             
             with grpc.insecure_channel('database:50055') as channel:
                 # Create a stub object.
+                logging.info(f"ExecutorPropose reading item: {item['name']}")
                 stub = database_grpc.DatabaseServiceStub(channel)
                 response = stub.DatabaseReader(database.DatabaseRead(key=item['name']))
                 if not response.data:
+                    logging.info(f"ExecutorPropose read item does not exist, initializing to 10")
                     number = 10
                 else:
                     response = json.loads(response.data)
+                    logging.info(f"ExecutorPropose read item {response}")
                     number = response['quantity']
             
         
