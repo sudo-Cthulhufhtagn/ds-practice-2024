@@ -184,75 +184,75 @@ def checkout():
     #         codes[futures_store[future]] = future.result()
     
     statusFail = False
-    # order_traceback = "" 
+    order_traceback = "" 
     
-    # response, order_id, global_clock = transaction_books_list(request_parsed['items'][0]['name'], order_id, global_clock)
-    # app.logger.info(f"Transaction Books List response: {response}, order_id: {order_id}, global_clock: {global_clock}")
+    response, order_id, global_clock = transaction_books_list(request_parsed['items'][0]['name'], order_id, global_clock)
+    app.logger.info(f"Transaction Books List response: {response}, order_id: {order_id}, global_clock: {global_clock}")
     
-    # if response:
-    #     statusFail = True
-    #     order_traceback += "Books list failed; "
+    if response:
+        statusFail = True
+        order_traceback += "Books list failed; "
     
-    # response, order_id, global_clock = transaction_user_date(order_id, 
-    #                                                          global_clock, 
-    #                                                          request_parsed['user']['name'], 
-    #                                                          request_parsed['user']['contact'], 
-    #                                                          request_parsed['billingAddress']['zip'])
+    response, order_id, global_clock = transaction_user_date(order_id, 
+                                                             global_clock, 
+                                                             request_parsed['user']['name'], 
+                                                             request_parsed['user']['contact'], 
+                                                             request_parsed['billingAddress']['zip'])
     
-    # app.logger.info(f"Transaction User Data response: {response}, order_id: {order_id}, global_clock: {global_clock}")
+    app.logger.info(f"Transaction User Data response: {response}, order_id: {order_id}, global_clock: {global_clock}")
     
-    # if response:
-    #     statusFail = True
-    #     order_traceback += "User data failed; "
+    if response:
+        statusFail = True
+        order_traceback += "User data failed; "
         
-    # if TIKTOK_MAGIC_SWITCH:
-    #     global_clock[0] += 1
+    if TIKTOK_MAGIC_SWITCH:
+        global_clock[0] += 1
     
-    # response, order_id, global_clock = fraud_user_check(
-    #     order_id, global_clock, request_parsed['user']['name'])
+    response, order_id, global_clock = fraud_user_check(
+        order_id, global_clock, request_parsed['user']['name'])
     
-    # app.logger.info(f"Fraud User Check response: {response}, order_id: {order_id}, global_clock: {global_clock}")
+    app.logger.info(f"Fraud User Check response: {response}, order_id: {order_id}, global_clock: {global_clock}")
     
-    # if response:
-    #     statusFail = True
-    #     order_traceback += "User fraud failed; "
+    if response:
+        statusFail = True
+        order_traceback += "User fraud failed; "
         
-    # if TIKTOK_MAGIC_SWITCH:
-    #     global_clock[1] += 1
+    if TIKTOK_MAGIC_SWITCH:
+        global_clock[1] += 1
         
-    # response, order_id, global_clock = transaction_card_check(
-    #     order_id, global_clock, request_parsed['creditCard']['number'])
+    response, order_id, global_clock = transaction_card_check(
+        order_id, global_clock, request_parsed['creditCard']['number'])
     
-    # app.logger.info(f"Transaction Card Check response: {response}, order_id: {order_id}, global_clock: {global_clock}")
+    app.logger.info(f"Transaction Card Check response: {response}, order_id: {order_id}, global_clock: {global_clock}")
     
-    # if response:
-    #     statusFail = True
-    #     order_traceback += "Card check failed; "
+    if response:
+        statusFail = True
+        order_traceback += "Card check failed; "
         
-    # if TIKTOK_MAGIC_SWITCH:
-    #     global_clock[0] += 1
+    if TIKTOK_MAGIC_SWITCH:
+        global_clock[0] += 1
         
-    # response, order_id, global_clock = fraud_credit_card(
-    #     order_id, global_clock, request_parsed['creditCard']['number'])
+    response, order_id, global_clock = fraud_credit_card(
+        order_id, global_clock, request_parsed['creditCard']['number'])
     
-    # app.logger.info(f"Fraud Credit Card response: {response}, order_id: {order_id}, global_clock: {global_clock}")
+    app.logger.info(f"Fraud Credit Card response: {response}, order_id: {order_id}, global_clock: {global_clock}")
     
-    # if response:
-    #     statusFail = True
-    #     order_traceback += "Card fraud failed; "
+    if response:
+        statusFail = True
+        order_traceback += "Card fraud failed; "
         
-    # if TIKTOK_MAGIC_SWITCH:
-    #     global_clock[1] += 1
+    if TIKTOK_MAGIC_SWITCH:
+        global_clock[1] += 1
     
         
-    # status = order_traceback if statusFail else "Order placed"
+    status = order_traceback if statusFail else "Order placed"
     
        
-    # app.logger.info(f"Status is fail: {statusFail}, response: {status}, order_id: {order_id}, global_clock: {global_clock}")
+    app.logger.info(f"Status is fail: {statusFail}, response: {status}, order_id: {order_id}, global_clock: {global_clock}")
     
-    # suggestios, order_id, global_clock = suggestion_request('dummy', order_id, global_clock)
+    suggestios, order_id, global_clock = suggestion_request('dummy', order_id, global_clock)
     
-    # app.logger.info(f"Suggestions response: {suggestios}, order_id: {order_id}, global_clock: {global_clock}")
+    app.logger.info(f"Suggestions response: {suggestios}, order_id: {order_id}, global_clock: {global_clock}")
             
             
     if not statusFail:
