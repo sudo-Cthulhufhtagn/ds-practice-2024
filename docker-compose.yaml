@@ -18,6 +18,8 @@ services:
       - WDS_SOCKET_PORT=0
     depends_on:
       - orchestrator
+    networks:
+      - monitoring
   orchestrator:
     build:
       # Use the current directory as the build context
@@ -46,6 +48,8 @@ services:
   #     - suggestion
       - queue
       - executor
+    networks:
+      - monitoring
   # fraud_detection:
   #   build:
   #     # Use the current directory as the build context
@@ -131,6 +135,8 @@ services:
       - ./utils:/app/utils
       # Mount the fraud_detection/src directory in the current directory to the /app/fraud_detection/src directory in the container
       - ./queue/src:/app/queue/src
+    networks:
+      - monitoring
   executor:
     # hostname: executor
     # container_name: executor
@@ -157,6 +163,8 @@ services:
       - ./executor/src:/app/executor/src
       # mount docker socket
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - monitoring
     deploy:
       replicas: 3
   
@@ -186,7 +194,8 @@ services:
       - ./database/src:/app/database/src
       # mount docker socket
       - /var/run/docker.sock:/var/run/docker.sock:ro
-
+    networks:
+      - monitoring
     deploy:
       replicas: 3
 
@@ -216,4 +225,44 @@ services:
       - ./payment/src:/app/payment/src
       # mount docker socket
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      
+
+    networks:
+      - monitoring
+
+  # Node Exporter for Docker metrics
+  node-exporter:
+    image: prom/node-exporter:v1.2.2
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
+    networks:
+      - monitoring
+
+  # Prometheus service
+  prometheus:
+    image: prom/prometheus:v2.26.0
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
+
+  # Grafana service
+  grafana:
+    image: grafana/grafana:7.5.7
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge
