@@ -1,0 +1,1 @@
+useful [article](https://www.linkedin.com/pulse/how-set-up-cypress-wsl-2-thomas-redstone-ym9ie/)
