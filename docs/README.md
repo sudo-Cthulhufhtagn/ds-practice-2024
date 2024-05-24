@@ -13,6 +13,7 @@ This is online bookshop project, with frontend and backend components(aka orches
       - [Database replicas](#database-replicas)
         - [Order executor](#order-executor)
         - [Distributed Commitment Protocol diagram](#distributed-commitment-protocol-diagram)
+  - [Checkpoint v4](#checkpoint-v4)
 
 ## Checkpoint V1 (Charlie)
 ### Architecture Diagram
@@ -75,3 +76,8 @@ The order executor try to get number of books in the database by sending book id
 ##### Distributed Commitment Protocol diagram
 
 ![img6](imgs/src6.gif)
+
+## Checkpoint v4
+
+Total diagram:
+![img7](imgs/src7.png)
